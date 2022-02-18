@@ -2,31 +2,33 @@
 /* jshint -W119 */
 function tabs(tabsSelector, tabsContentSelector, tabsParentSelector, activeClass) {
     //Tabs
+    //помещаем в переменные элементы со страницы
     const tabs = document.querySelectorAll(tabsSelector),
           tabsContent = document.querySelectorAll(tabsContentSelector),
           tabsParent = document.querySelector(tabsParentSelector);
     
-    function hideTabContent() {
+    function hideTabContent() {//скрываем все
         tabsContent.forEach(item => {
             item.classList.add('hide');
             item.classList.remove('show', 'fade');
         });
 
-        tabs.forEach(item => {
+        tabs.forEach(item => {//удаляем класс активности
             item.classList.remove(activeClass);
         });
     }
 
-    function showTabContent(i = 0) {
+    function showTabContent(i = 0) {//показывем 
         tabsContent[i].classList.add('show', 'fade');
         tabsContent[i].classList.remove('hide');
         tabs[i].classList.add(activeClass);
     }
 
+    //вызываем
     hideTabContent();
     showTabContent();
 
-    tabsParent.addEventListener('click', (event) => {
+    tabsParent.addEventListener('click', (event) => {//добавляем обработчик события на клик 
         const target = event.target;
 
         if(target && target.classList.contains(tabsSelector.slice(1))) {

@@ -3,14 +3,14 @@
 function timer(id, deadline) {
     //Timer
 
-    function getTimeRemaining(endtime) {
-        const t = Date.parse(endtime) - Date.parse(new Date()),
+    function getTimeRemaining(endtime) {//высчитываем время в зависимости от выбранной даты окончания
+        const t = Date.parse(endtime) - Date.parse(new Date()),//помещаем в переменные
               days = Math.floor(t/(1000 * 60 * 60 * 24)),
               hours = Math.floor((t / (1000 * 60 * 60) % 24)),
               minutes = Math.floor((t / 1000 / 60) % 60),
               seconds = Math.floor((t / 1000) % 60);
 
-        return {
+        return {//возвращаем 
             'total': t,
             'days': days,
             'hours': hours,
@@ -19,7 +19,7 @@ function timer(id, deadline) {
         };
     }
 
-    function getZero(num) {
+    function getZero(num) {//если время меньше 10 добавляем вперед 0
         if(num >= 0 && num < 10) {
             return `0${num}`;
         } else {
@@ -27,7 +27,7 @@ function timer(id, deadline) {
         }
     }
 
-    function setClock(selector, endtime) {
+    function setClock(selector, endtime) {//берем элементы со страницы
         const timer = document.querySelector(selector),
                days = timer.querySelector('#days'),
                hours = timer.querySelector('#hours'),
@@ -37,7 +37,7 @@ function timer(id, deadline) {
 
         updateClock();
 
-        function updateClock() {
+        function updateClock() {//помещаем на страницу время и обновляем его
             const t = getTimeRemaining(endtime);
 
             days.innerHTML = getZero(t.days);

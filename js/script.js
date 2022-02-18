@@ -3,6 +3,7 @@
 /* jshint -W119 */
 require('es6-promise').polyfill();
 
+//импортируем модули
 import tabs from './modules/tabs';
 import modal from './modules/modal';
 import timer from './modules/timer';
@@ -13,11 +14,13 @@ import slider from './modules/slider';
 import {openModal} from './modules/modal';
 
 window.addEventListener('DOMContentLoaded', () => {
+    //устанавливаем значение таймера и вызываем
     const modalTimerId = setTimeout(() => openModal('.modal', modalTimerId), 50000);
 
+    //вызываем модули
     tabs('.tabheader__item', '.tabcontent', '.tabheader__items', 'tabheader__item_active');
     modal('[data-modal]', '.modal', modalTimerId);
-    timer('.timer', '2021-10-25');
+    timer('.timer', '2022-01-20');
     cards();
     calc();
     forms('form', modalTimerId);

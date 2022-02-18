@@ -14,110 +14,120 @@ __webpack_require__.r(__webpack_exports__);
 /* jshint -W119 */
 function calc() {
   //Calc
-  const result = document.querySelector('.calculating__result span');
-  let sex, height, weight, age, ratio;
+  const result = document.querySelector('.calculating__result span'); //помещаем в переменную элемент с результатом со страницы
 
-  if (localStorage.getItem('sex')) {
-    sex = localStorage.getItem('sex');
-  } else {
-    sex = 'female';
-    localStorage.setItem('sex', 'female');
-  }
+  let type, number, weight, addWeight; //создаем переменные для хранения значений
 
-  if (localStorage.getItem('ratio')) {
-    ratio = localStorage.getItem('ratio');
+  if (localStorage.getItem('type')) {
+    //проверяем есть ли значение в локальном хранилище
+    type = localStorage.getItem('type'); //если есть помещяем их в переменную
   } else {
-    ratio = 1.375;
-    localStorage.setItem('ratio', 1.375);
+    type = 'children'; //если нет ничего, назначаем по умолчанию
+
+    localStorage.setItem('type', 'children'); //помещаем в локальное хранилище
   }
 
   function initLocalSettings(selector, activeClass) {
-    const elements = document.querySelectorAll(selector);
+    const elements = document.querySelectorAll(selector); //помещаем в переменную элесенты по введенному селектору
+
     elements.forEach(elem => {
-      elem.classList.remove(activeClass);
+      elem.classList.remove(activeClass); //удаляем класс активности
 
-      if (elem.getAttribute('id') === localStorage.getItem('sex')) {
-        elem.classList.add(activeClass);
-      }
-
-      if (elem.getAttribute('data-ratio') === localStorage.getItem('ratio')) {
-        elem.classList.add(activeClass);
+      if (elem.getAttribute('id') === localStorage.getItem('type')) {
+        //сравниваем со значением в хранилище
+        elem.classList.add(activeClass); //добавляем класс активности
       }
     });
   }
 
-  initLocalSettings('#gender div', 'calculating__choose-item_active');
-  initLocalSettings('.calculating__choose_big div', 'calculating__choose-item_active');
+  initLocalSettings('#type div', 'calculating__choose-item_active'); //вызываем функцию и передаем параметры
+
+  initLocalSettings('.calculating__choose_big div', 'calculating__choose-item_active'); //вызываем функцию и передаем параметры
 
   function calcTotal() {
-    if (!sex || !height || !weight || !age || !ratio) {
-      result.textContent = '____';
+    if (!type || !number || !weight || !addWeight) {
+      result.textContent = '____'; //если нет какого-то значения, помещаем туда подчеркивания
+
       return;
     }
 
-    if (sex === 'female') {
-      result.textContent = Math.round((447.6 + 9.2 * weight + 3.1 * height - 4.3 * age) * ratio);
+    let r = number * weight + addWeight; //выссчитываем результат
+
+    if (type === 'children') {
+      //если выбраны дети высчитываем по данной формуле
+      result.textContent = Math.round(r + r * 5 / 100);
     } else {
-      result.textContent = Math.round((88, 36 + 13.4 * weight + 4.8 * height - 5.7 * age) * ratio);
+      //иначе высчитываем по данной формуле
+      result.textContent = Math.round(r + r * 10 / 100);
     }
   }
 
-  calcTotal();
+  calcTotal(); //вызываем функцию
 
   function getStaticInformation(selector, activeClass) {
-    const elements = document.querySelectorAll(selector);
+    const elements = document.querySelectorAll(selector); //помещаем  в переменную элементы со страницы
+
     elements.forEach(elem => {
+      //для каждого элемента выполняем следующие действия
       elem.addEventListener('click', e => {
-        if (e.target.getAttribute('data-ratio')) {
-          ratio = +e.target.getAttribute('data-ratio');
-          localStorage.setItem('ratio', +e.target.getAttribute('data-ratio'));
-        } else {
-          sex = e.target.getAttribute('id');
-          localStorage.setItem('sex', e.target.getAttribute('id'));
-        }
+        //обработчик события(клик)
+        type = e.target.getAttribute('id'); //берем id элемента, на который кликнули
+
+        localStorage.setItem('type', e.target.getAttribute('id')); //помещаем значение в локальное хранилище
 
         elements.forEach(elem => {
-          elem.classList.remove(activeClass);
+          elem.classList.remove(activeClass); //удаляем класс активности со всех элементов
         });
-        e.target.classList.add(activeClass);
-        calcTotal();
+        e.target.classList.add(activeClass); //добавляем класс активности на выбранный элемент
+
+        calcTotal(); //вызываем калькулятор
       });
     });
   }
 
-  getStaticInformation('#gender div', 'calculating__choose-item_active');
-  getStaticInformation('.calculating__choose_big div', 'calculating__choose-item_active');
+  getStaticInformation('#type div', 'calculating__choose-item_active'); //вызываем функцию с параметрами
+
+  getStaticInformation('.calculating__choose_big div', 'calculating__choose-item_active'); //вызываем функцию с параметрами
 
   function getDynamicInformation(selector) {
-    const input = document.querySelector(selector);
+    const input = document.querySelector(selector); //помещаем  в переменную элемент со страницы
+
     input.addEventListener('input', () => {
+      //обработчик события на ввод
       if (input.value.match(/\D/g)) {
-        input.style.border = '1px solid red';
+        //регулярка для проверки некорректности ввода
+        input.style.border = '1px solid red'; //красный ободок для поля
       } else {
-        input.style.border = 'none';
+        //
+        input.style.border = 'none'; //убираем стиль с ободка
       }
 
       switch (input.getAttribute('id')) {
-        case 'height':
-          height = +input.value;
+        //берем id поля в которое вводим
+        case 'number':
+          //если вводим значение в number прибавляем это значение к переменной
+          number = +input.value;
           break;
 
         case 'weight':
+          //если вводим значение в weight прибавляем это значение к переменной
           weight = +input.value;
           break;
 
-        case 'age':
-          age = +input.value;
+        case 'addWeight':
+          //если вводим значение в addWeight прибавляем это значение к переменной
+          addWeight = +input.value;
           break;
       }
 
-      calcTotal();
+      calcTotal(); //вызываем функцию
     });
-  }
+  } //вызываем
 
-  getDynamicInformation('#height');
+
+  getDynamicInformation('#number');
   getDynamicInformation('#weight');
-  getDynamicInformation('#age');
+  getDynamicInformation('#addWeight');
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (calc);
@@ -141,7 +151,10 @@ __webpack_require__.r(__webpack_exports__);
 function cards() {
   //Классы для карточек меню
   class MenuCard {
+    //создаем класс карточка
     constructor(src, alt, title, descr, price, parentSelector, ...classes) {
+      //конструктор с параметрами
+      //помещаем переданные значения в поля класса
       this.src = src;
       this.alt = alt;
       this.title = title;
@@ -150,22 +163,20 @@ function cards() {
       this.classes = classes;
       this.parent = document.querySelector(parentSelector);
       this.transfer = 27;
-      this.changeToUAH();
-    }
-
-    changeToUAH() {
-      this.price = this.price * this.transfer;
     }
 
     render() {
-      const element = document.createElement('div');
+      //помещаем на страницу верстку
+      const element = document.createElement('div'); //создаем div чтобы поместить туда верстку (оборачиваем)
 
       if (this.classes.length === 0) {
+        //если не переданы классы добавляем
         this.element = 'menu__item';
         element.classList.add(this.element);
       } else {
-        this.classes.forEach(className => element.classList.add(className));
-      }
+        this.classes.forEach(className => element.classList.add(className)); //иначе добавляем каждый
+      } //помещаем верстку со значениями
+
 
       element.innerHTML = `
                 <img src=${this.src} alt=${this.alt}>
@@ -174,15 +185,16 @@ function cards() {
                 <div class="menu__item-divider"></div>
                 <div class="menu__item-price">
                     <div class="menu__item-cost">Цена:</div>
-                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                    <div class="menu__item-total"><span>${this.price}</span> руб/шт</div>
                 </div>
             `;
-      this.parent.append(element);
+      this.parent.append(element); //добавляем на страницу
     }
 
   }
 
-  (0,_services_services__WEBPACK_IMPORTED_MODULE_0__.getResourse)('http://localhost:3000/menu').then(data => {
+  (0,_services_services__WEBPACK_IMPORTED_MODULE_0__.getResourse)('http://localhost:3000/menu') //берем данные с 'базы данных'
+  .then(data => {
     data.forEach(({
       img,
       altimg,
@@ -217,59 +229,81 @@ __webpack_require__.r(__webpack_exports__);
 /* jshint -W104 */
 
 /* jshint -W119 */
+//импортируем модули
 
 
 
 function forms(formSelector, modalTimerId) {
   //Forms
-  const forms = document.querySelectorAll(formSelector);
+  const forms = document.querySelectorAll(formSelector); //помещаем элементы в переменную
+
   const message = {
+    //создаем возможные сообщения
     loading: 'img/form/spinner.svg',
     success: 'Спасибо! Скоро мы с вами свяжемся',
     failure: 'Что-то пошло не так...'
   };
   forms.forEach(item => {
+    //для каждого элемента вызываем функцию
     bindPostData(item);
   });
 
   function bindPostData(form) {
     form.addEventListener('submit', e => {
-      e.preventDefault();
-      const statusMessage = document.createElement('img');
-      statusMessage.src = message.loading;
+      //обработчик события
+      e.preventDefault(); //если событие не обрабатывается явно, его действие по умолчанию не должно выполняться так, как обычно
+
+      const statusMessage = document.createElement('img'); //создаем элемент с картинкой
+
+      statusMessage.src = message.loading; //помещаем картинку загрузки
+      //добавляем стили
+
       statusMessage.style.cssText = `
                 display: block;
                 margin: 0 auto; 
             `;
-      form.insertAdjacentElement('afterend', statusMessage);
+      form.insertAdjacentElement('afterend', statusMessage); //вставляем значок после сообщения
+
       const formData = new FormData(form);
-      const json = JSON.stringify(Object.fromEntries(formData.entries()));
-      (0,_services_services__WEBPACK_IMPORTED_MODULE_1__.postData)('http://localhost:3000/requests', json).then(data => {
-        console.log(data);
-        showThanksModal(message.success);
-        statusMessage.remove();
+      const json = JSON.stringify(Object.fromEntries(formData.entries())); //берем данные из базы данных
+
+      (0,_services_services__WEBPACK_IMPORTED_MODULE_1__.postData)('http://localhost:3000/requests', json) //отправляем запрос 
+      .then(data => {
+        console.log(data); //выводим данные
+
+        showThanksModal(message.success); //показывем сообщение об успешном завершении
+
+        statusMessage.remove(); //удаляем статус
       }).catch(() => {
-        showThanksModal(message.failure);
+        showThanksModal(message.failure); //если чтото не так показываем сообщение об ошибке
       }).finally(() => {
-        form.reset();
+        form.reset(); //в любом случае сбрасываем все
       });
     });
   }
 
   function showThanksModal(message) {
-    const prevModalDialog = document.querySelector('.modal__dialog');
-    prevModalDialog.classList.add('hide');
-    (0,_modal__WEBPACK_IMPORTED_MODULE_0__.openModal)('.modal', modalTimerId);
-    const thanksModal = document.createElement('div');
-    thanksModal.classList.add('modal__dialog');
+    const prevModalDialog = document.querySelector('.modal__dialog'); //берем элементы со страницы
+
+    prevModalDialog.classList.add('hide'); //скрываем окно
+
+    (0,_modal__WEBPACK_IMPORTED_MODULE_0__.openModal)('.modal', modalTimerId); //вызываем функцию с таймероом
+
+    const thanksModal = document.createElement('div'); //создаем обертку для верстки
+
+    thanksModal.classList.add('modal__dialog'); //добавляем
+    //генерируем верстку
+
     thanksModal.innerHTML = `
             <div class="modal__content">
                 <div class="modal__close" data-close>×</div>
                 <div class="modal__title">${message}</div>
             </div>
         `;
-    document.querySelector('.modal').append(thanksModal);
+    document.querySelector('.modal').append(thanksModal); //добавляем к элементу
+
     setTimeout(() => {
+      //через заданное время выполняем следующие действия
       thanksModal.remove();
       prevModalDialog.classList.add('show');
       prevModalDialog.classList.remove('hide');
@@ -301,11 +335,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /* jshint -W119 */
 function openModal(modalSelector, modalTimerId) {
-  const modal = document.querySelector(modalSelector);
-  modal.classList.add('show');
-  modal.classList.remove('hide'); //modal.classList.toggle('show');
+  //функция с таймером
+  const modal = document.querySelector(modalSelector); //помещаем в переменную элемент со страницы
 
-  document.body.style.overflow = 'hidden';
+  modal.classList.add('show'); //добавляем 
+
+  modal.classList.remove('hide'); //удаляем
+  //modal.classList.toggle('show');//можно заменить переключателем
+
+  document.body.style.overflow = 'hidden'; //добавляем стиль
+
   console.log(modalTimerId);
 
   if (modalTimerId) {
@@ -313,6 +352,7 @@ function openModal(modalSelector, modalTimerId) {
   }
 }
 function closeModal(modalSelector) {
+  //такая же функция без таймера
   const modal = document.querySelector(modalSelector);
   modal.classList.add('hide');
   modal.classList.remove('show'); //modal.classList.toggle('show');
@@ -325,14 +365,17 @@ function modal(triggerSelector, modalSelector, modalTimerId) {
   const modalTrigger = document.querySelectorAll(triggerSelector),
         modal = document.querySelector(modalSelector);
   modalTrigger.forEach(btn => {
+    //для каждого элемента добавляем обработчик события на клик вызываем функцию
     btn.addEventListener('click', () => openModal(modalSelector, modalTimerId));
   });
   modal.addEventListener('click', e => {
+    //для каждого элемента добавляем обработчик события на клик закрываем модальное окно
     if (e.target === modal || e.target.getAttribute('data-close') == '') {
       closeModal(modalSelector);
     }
   });
   document.addEventListener('keydown', e => {
+    //для каждого элемента добавляем обработчик события на нажатие клавиши закрываем модальное окно
     if (e.code === "Escape" && modal.classList.contains('show')) {
       closeModal(modalSelector);
     }
@@ -340,12 +383,13 @@ function modal(triggerSelector, modalSelector, modalTimerId) {
 
   function showModalByScroll() {
     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+      //если долистывваем до конца появляется модальное окно
       openModal(modalSelector, modalTimerId);
       window.removeEventListener('scroll', showModalByScroll);
     }
   }
 
-  window.addEventListener('scroll', showModalByScroll);
+  window.addEventListener('scroll', showModalByScroll); //вызываем
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (modal);
@@ -374,6 +418,7 @@ function slider({
   field
 }) {
   //Slider
+  //помещаем в переменные элементы со страницы
   const slides = document.querySelectorAll(slide),
         slider = document.querySelector(container),
         prev = document.querySelector(prevArrow),
@@ -382,29 +427,41 @@ function slider({
         current = document.querySelector(currentCounter),
         slidesWrapper = document.querySelector(wrapper),
         slidesField = document.querySelector(field),
-        width = window.getComputedStyle(slidesWrapper).width;
+        width = window.getComputedStyle(slidesWrapper).width; //создаем переменные для слайдов
+
   let slideIndex = 1;
   let offset = 0;
 
   if (slides.length < 10) {
+    //если количество слайдов меньше 10 добавляем спереди 0
     total.textContent = `0${slides.length}`;
     current.textContent = `0${slideIndex}`;
   } else {
+    //иначе оставляем как есть
     total.textContent = slides.length;
     current.textContent = slideIndex;
   }
 
-  slidesField.style.width = slides.length * 100 + '%';
-  slidesField.style.display = 'flex';
-  slidesField.style.transition = '0.5s all';
-  slidesWrapper.style.overflow = 'hidden';
+  slidesField.style.width = slides.length * 100 + '%'; //высчитываем ширину слайдов и добавляем к стилям
+
+  slidesField.style.display = 'flex'; //добавляем стиль
+
+  slidesField.style.transition = '0.5s all'; //добавляем стиль
+
+  slidesWrapper.style.overflow = 'hidden'; //добавляем стиль
+
   slides.forEach(slide => {
+    //для каждого слайда устанавливаем ширину
     slide.style.width = width;
   });
-  slider.style.position = 'relative';
+  slider.style.position = 'relative'; //добавляем стиль
+
   const indicators = document.createElement('ol'),
-        dots = [];
-  indicators.classList.add('carousel-indicators');
+        //создаем список точек
+  dots = [];
+  indicators.classList.add('carousel-indicators'); //добавляем класс
+  //создаем стили
+
   indicators.style.cssText = `
         position: absolute;
         right: 0;
@@ -417,9 +474,10 @@ function slider({
         margin-left: 15%;
         list-style: none;
     `;
-  slider.append(indicators);
+  slider.append(indicators); //lj,fdkztv yf cnhfybwe
 
   function currentValue() {
+    //определяем текущий индекс и помещаем
     if (slideIndex < 10) {
       current.textContent = `0${slideIndex}`;
     } else {
@@ -428,11 +486,13 @@ function slider({
   }
 
   function activeDot() {
+    //определяем активную точку(слайд)
     dots.forEach(dot => dot.style.opacity = '.5');
     dots[slideIndex - 1].style.opacity = 1;
   }
 
   for (let i = 0; i < slides.length; i++) {
+    //для каждого слайда создаем точку и создаем стили для точек
     const dot = document.createElement('li');
     dot.setAttribute('data-slide-to', i + 1);
     dot.style.cssText = `
@@ -452,25 +512,28 @@ function slider({
         `;
 
     if (i == 0) {
+      //проверяем равен ли индекс одному и добавляем стиль
       dot.style.opacity = 1;
     }
 
-    indicators.append(dot);
+    indicators.append(dot); //добавляем на страницу
+
     dots.push(dot);
   }
 
   function deleteNotDigits(str) {
-    return +str.replace(/\D/g, '');
+    return +str.replace(/\D/g, ''); //заменяем регуляркой
   }
 
   next.addEventListener('click', () => {
+    //обработчик события на клик 
     if (offset == deleteNotDigits(width) * (slides.length - 1)) {
-      offset = 0;
+      offset = 0; //если индекс равен количеству переходим на самый первый
     } else {
-      offset += deleteNotDigits(width);
+      offset += deleteNotDigits(width); //иначе добавляем один
     }
 
-    slidesField.style.transform = `translateX(-${offset}px)`;
+    slidesField.style.transform = `translateX(-${offset}px)`; //перемещаем
 
     if (slideIndex == slides.length) {
       slideIndex = 1;
@@ -478,17 +541,20 @@ function slider({
       slideIndex++;
     }
 
-    currentValue();
-    activeDot();
+    currentValue(); //вызывем текущее значение
+
+    activeDot(); //вызываем активную точку
   });
   prev.addEventListener('click', () => {
+    //обработчик события на клик стрелки назад 
     if (offset == 0) {
+      //если равно 0 перемещаем на последний иначе -1
       offset = deleteNotDigits(width) * (slides.length - 1);
     } else {
       offset -= deleteNotDigits(width);
     }
 
-    slidesField.style.transform = `translateX(-${offset}px)`;
+    slidesField.style.transform = `translateX(-${offset}px)`; //перемещаем
 
     if (slideIndex == 1) {
       slideIndex = slides.length;
@@ -496,10 +562,12 @@ function slider({
       slideIndex--;
     }
 
-    currentValue();
-    activeDot();
+    currentValue(); //вызывем текущее значение
+
+    activeDot(); //вызываем активную точку
   });
   dots.forEach(dot => {
+    //для каждой точки добавляем обработчик события на клик 
     dot.addEventListener('click', e => {
       const slideTo = e.target.getAttribute('data-slide-to');
       slideIndex = slideTo;
@@ -528,29 +596,35 @@ __webpack_require__.r(__webpack_exports__);
 /* jshint -W119 */
 function tabs(tabsSelector, tabsContentSelector, tabsParentSelector, activeClass) {
   //Tabs
+  //помещаем в переменные элементы со страницы
   const tabs = document.querySelectorAll(tabsSelector),
         tabsContent = document.querySelectorAll(tabsContentSelector),
         tabsParent = document.querySelector(tabsParentSelector);
 
   function hideTabContent() {
+    //скрываем все
     tabsContent.forEach(item => {
       item.classList.add('hide');
       item.classList.remove('show', 'fade');
     });
     tabs.forEach(item => {
+      //удаляем класс активности
       item.classList.remove(activeClass);
     });
   }
 
   function showTabContent(i = 0) {
+    //показывем 
     tabsContent[i].classList.add('show', 'fade');
     tabsContent[i].classList.remove('hide');
     tabs[i].classList.add(activeClass);
-  }
+  } //вызываем
+
 
   hideTabContent();
   showTabContent();
   tabsParent.addEventListener('click', event => {
+    //добавляем обработчик события на клик 
     const target = event.target;
 
     if (target && target.classList.contains(tabsSelector.slice(1))) {
@@ -582,12 +656,15 @@ __webpack_require__.r(__webpack_exports__);
 function timer(id, deadline) {
   //Timer
   function getTimeRemaining(endtime) {
+    //высчитываем время в зависимости от выбранной даты окончания
     const t = Date.parse(endtime) - Date.parse(new Date()),
-          days = Math.floor(t / (1000 * 60 * 60 * 24)),
+          //помещаем в переменные
+    days = Math.floor(t / (1000 * 60 * 60 * 24)),
           hours = Math.floor(t / (1000 * 60 * 60) % 24),
           minutes = Math.floor(t / 1000 / 60 % 60),
           seconds = Math.floor(t / 1000 % 60);
     return {
+      //возвращаем 
       'total': t,
       'days': days,
       'hours': hours,
@@ -597,6 +674,7 @@ function timer(id, deadline) {
   }
 
   function getZero(num) {
+    //если время меньше 10 добавляем вперед 0
     if (num >= 0 && num < 10) {
       return `0${num}`;
     } else {
@@ -605,6 +683,7 @@ function timer(id, deadline) {
   }
 
   function setClock(selector, endtime) {
+    //берем элементы со страницы
     const timer = document.querySelector(selector),
           days = timer.querySelector('#days'),
           hours = timer.querySelector('#hours'),
@@ -614,6 +693,7 @@ function timer(id, deadline) {
     updateClock();
 
     function updateClock() {
+      //помещаем на страницу время и обновляем его
       const t = getTimeRemaining(endtime);
       days.innerHTML = getZero(t.days);
       hours.innerHTML = getZero(t.hours);
@@ -648,6 +728,7 @@ __webpack_require__.r(__webpack_exports__);
 /* jshint -W104 */
 
 /* jshint -W119 */
+//подклю
 const postData = async (url, data) => {
   const res = await fetch(url, {
     method: 'POST',
@@ -1941,7 +2022,8 @@ __webpack_require__.r(__webpack_exports__);
 /* jshint -W104 */
 
 /* jshint -W119 */
-__webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-promise.js").polyfill();
+__webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-promise.js").polyfill(); //импортируем модули
+
 
 
 
@@ -1952,10 +2034,12 @@ __webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-prom
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  const modalTimerId = setTimeout(() => (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__.openModal)('.modal', modalTimerId), 50000);
+  //устанавливаем значение таймера и вызываем
+  const modalTimerId = setTimeout(() => (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__.openModal)('.modal', modalTimerId), 50000); //вызываем модули
+
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_0__["default"])('.tabheader__item', '.tabcontent', '.tabheader__items', 'tabheader__item_active');
   (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])('[data-modal]', '.modal', modalTimerId);
-  (0,_modules_timer__WEBPACK_IMPORTED_MODULE_2__["default"])('.timer', '2021-10-25');
+  (0,_modules_timer__WEBPACK_IMPORTED_MODULE_2__["default"])('.timer', '2022-01-20');
   (0,_modules_cards__WEBPACK_IMPORTED_MODULE_3__["default"])();
   (0,_modules_calc__WEBPACK_IMPORTED_MODULE_4__["default"])();
   (0,_modules_forms__WEBPACK_IMPORTED_MODULE_5__["default"])('form', modalTimerId);

@@ -2,112 +2,99 @@
 /* jshint -W119 */
 function calc() {
     //Calc
-    const result = document.querySelector('.calculating__result span');
-    let sex, height, weight, age, ratio;
+    const result = document.querySelector('.calculating__result span');//помещаем в переменную элемент с результатом со страницы
+    let type, number, weight, addWeight;//создаем переменные для хранения значений
 
-    if (localStorage.getItem('sex')) {
-        sex = localStorage.getItem('sex');
+    if (localStorage.getItem('type')) {//проверяем есть ли значение в локальном хранилище
+        type = localStorage.getItem('type');//если есть помещяем их в переменную
     } else {
-        sex = 'female';
-        localStorage.setItem('sex', 'female');
-    }
-
-    if (localStorage.getItem('ratio')) {
-        ratio = localStorage.getItem('ratio');
-    } else {
-        ratio = 1.375;
-        localStorage.setItem('ratio', 1.375);
+        type = 'children';//если нет ничего, назначаем по умолчанию
+        localStorage.setItem('type', 'children');//помещаем в локальное хранилище
     }
 
     function initLocalSettings(selector, activeClass) {
-        const elements = document.querySelectorAll(selector);
+        const elements = document.querySelectorAll(selector);//помещаем в переменную элесенты по введенному селектору
 
         elements.forEach(elem => {
-            elem.classList.remove(activeClass);
-            if (elem.getAttribute('id') === localStorage.getItem('sex')) {
-                elem.classList.add(activeClass);
-            }
-            if (elem.getAttribute('data-ratio') === localStorage.getItem('ratio')) {
-                elem.classList.add(activeClass);
+            elem.classList.remove(activeClass);//удаляем класс активности
+            if (elem.getAttribute('id') === localStorage.getItem('type')) {//сравниваем со значением в хранилище
+                elem.classList.add(activeClass);//добавляем класс активности
             }
         });
     }
 
-    initLocalSettings('#gender div', 'calculating__choose-item_active');
-    initLocalSettings('.calculating__choose_big div', 'calculating__choose-item_active');
+    initLocalSettings('#type div', 'calculating__choose-item_active');//вызываем функцию и передаем параметры
+    initLocalSettings('.calculating__choose_big div', 'calculating__choose-item_active');//вызываем функцию и передаем параметры
 
     function calcTotal() {
-        if (!sex || !height || !weight || !age || !ratio) {
-            result.textContent = '____';
+        if (!type || !number || !weight || !addWeight) {
+            result.textContent = '____';//если нет какого-то значения, помещаем туда подчеркивания
             return;
         }
 
-        if (sex === 'female') {
-            result.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
-        } else {
-            result.textContent = Math.round((88,36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio);
+        let r = number * weight + addWeight;//выссчитываем результат
+        if (type === 'children') {//если выбраны дети высчитываем по данной формуле
+            result.textContent = Math.round(r + r*5/100);
+        } else {//иначе высчитываем по данной формуле
+            result.textContent = Math.round(r + r*10/100);
         }
     }
 
-    calcTotal();
+    calcTotal();//вызываем функцию
 
     function getStaticInformation(selector, activeClass) {
-        const elements = document.querySelectorAll(selector);
+        const elements = document.querySelectorAll(selector);//помещаем  в переменную элементы со страницы
 
-        elements.forEach(elem => {
-            elem.addEventListener('click', (e) => {
-                if (e.target.getAttribute('data-ratio')) {
-                    ratio = +e.target.getAttribute('data-ratio');
-                    localStorage.setItem('ratio', +e.target.getAttribute('data-ratio'));
-                } else {
-                    sex = e.target.getAttribute('id');
-                    localStorage.setItem('sex', e.target.getAttribute('id'));
-                }
+        elements.forEach(elem => {//для каждого элемента выполняем следующие действия
+            elem.addEventListener('click', (e) => {//обработчик события(клик)
+                type = e.target.getAttribute('id');//берем id элемента, на который кликнули
+                localStorage.setItem('type', e.target.getAttribute('id'));//помещаем значение в локальное хранилище
     
                 elements.forEach(elem => {
-                    elem.classList.remove(activeClass);
+                    elem.classList.remove(activeClass);//удаляем класс активности со всех элементов
                 });
     
-                e.target.classList.add(activeClass);
+                e.target.classList.add(activeClass);//добавляем класс активности на выбранный элемент
     
-                calcTotal();
+                calcTotal();//вызываем калькулятор
             });
         });
     }
 
-    getStaticInformation('#gender div', 'calculating__choose-item_active');
-    getStaticInformation('.calculating__choose_big div', 'calculating__choose-item_active');
+    getStaticInformation('#type div', 'calculating__choose-item_active');//вызываем функцию с параметрами
+    getStaticInformation('.calculating__choose_big div', 'calculating__choose-item_active');//вызываем функцию с параметрами
 
     function getDynamicInformation(selector) {
-        const input = document.querySelector(selector);
+        const input = document.querySelector(selector);//помещаем  в переменную элемент со страницы
 
-        input.addEventListener('input', () => {
+        input.addEventListener('input', () => {//обработчик события на ввод
 
-            if (input.value.match(/\D/g)) {
-                input.style.border = '1px solid red';
-            } else {
-                input.style.border = 'none';
+            if (input.value.match(/\D/g)) {//регулярка для проверки некорректности ввода
+                input.style.border = '1px solid red';//красный ободок для поля
+            } else {//
+                input.style.border = 'none';//убираем стиль с ободка
             }
 
-            switch(input.getAttribute('id')) {
-                case 'height':
-                    height = +input.value;
+            switch(input.getAttribute('id')) {//берем id поля в которое вводим
+                case 'number'://если вводим значение в number прибавляем это значение к переменной
+                    number = +input.value;
                     break;
-                case 'weight':
+                case 'weight'://если вводим значение в weight прибавляем это значение к переменной
                     weight = +input.value;
                     break;
-                case 'age':
-                    age = +input.value;
+                case 'addWeight'://если вводим значение в addWeight прибавляем это значение к переменной
+                    addWeight = +input.value;
                     break;
             }
 
-            calcTotal();
+            calcTotal();//вызываем функцию
         });
     }
 
-    getDynamicInformation('#height');
+    //вызываем
+    getDynamicInformation('#number');
     getDynamicInformation('#weight');
-    getDynamicInformation('#age');
+    getDynamicInformation('#addWeight');
 }
 
 export default calc;

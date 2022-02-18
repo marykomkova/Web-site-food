@@ -3,74 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food</title>
+    <title>Desserts.koma</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<style type="text/css">
+    a:link { 
+        text-decoration: none; /* Убирает подчеркивание для ссылок */
+    } 
+    a:visited { text-decoration: none; } 
+    a:active { text-decoration: none; }
+    a:hover { 
+        font-size: 24px; /* Размер шрифта */
+        font-weight: bold; /* Жирное начертание */
+   }
+</style>
 <body>
     <header class="header">
         <div class="header__left-block">
             <div class="header__logo">
-                <img src="icons/logo.svg" alt="Логотип">
+                <img src="icons/logo2.svg" alt="Логотип">
             </div>
             <nav class="header__links">
-                <a href="#" class="header__link">Доставка питания</a>
-                <a href="#" class="header__link">Второй пункт</a>
+                <a href="#calc" class="header__link">Калькулятор</a>
+                <a href="#offers" class="header__link">Предложения недели</a>
             </nav>
         </div>
         <div class="header__right-block">
             <button data-modal class="btn btn_white">Связаться с нами</button>
         </div>
     </header>
-    <div class="sidepanel">
+
+    <div class="leftpanel">
+        <div class="ghost">
+            <button data-modal class="menu_button">
+                <img class="icon_bg" src="https://img.icons8.com/external-flatart-icons-solid-flatarticons/50/000000/external-menu-ux-and-ui-flatart-icons-solid-flatarticons.png"/>
+                <div><p class="menu__text">Меню</p></div>
+            </button>
+        </div>
+    </div>
+    <!--<div class="sidepanel">
         <div class="sidepanel__text"><span>Социальные сети</span></div>
         <div class="sidepanel__divider"></div>
-        <a href="#" class="sidepanel__icon">
+        <a href="https://instagram.com/desserts.koma?utm_medium=copy_link" class="sidepanel__icon">
             <img src="icons/instagram.svg" alt="instagram">
         </a>
-        <a href="#" class="sidepanel__icon">
-            <img src="icons/facebook.svg" alt="facebook">
+        <a href="https://t.me/dessertscoma" class="sidepanel__icon">
+            <img src="icons/telegram.svg" alt="telegram">
         </a>
-    </div>
+    </div>-->
 
     <div class="preview">
         <div class="bgc_blue"></div>
         <div class="container">
             <div class="tabcontainer">
                 <div class="tabcontent">
-                    <img src="img/tabs/vegy.jpg" alt="vegy">
+                    <img src="img/tabs/cupcakes.jpg" alt="cupcake">
                     <div class="tabcontent__descr">
-                        Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Для людей, которые интересуются спортом; активных и здоровых. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!
+                        <i>Капкейк-это буквально торт в кружке. И ему присущи все характеристики традиционного торта, такие как сладкое нежное тесто, обильная «шапочка» из крема и кондитерские украшения.</i>
                     </div>
                 </div>
                 <div class="tabcontent">
-                    <img src="img/tabs/elite.jpg" alt="elite">
+                    <img src="img/tabs/cakes.jpg" alt="cake">
                     <div class="tabcontent__descr">
-                        Меню “Премиум” - мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!                                     
+                       <i>Торт – это искусство создания хорошего настроения, это праздник на празднике, это кульминационный момент торжества.</i>                            
                     </div>
                 </div>
                 <div class="tabcontent">
-                    <img src="img/tabs/post.jpg" alt="post">
+                    <img src="img/tabs/macaroon.png" alt="macaroon">
                     <div class="tabcontent__descr">
-                        Наше специальное “Постное меню” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения. Полная гармония с собой и природой в каждом элементе! Все будет Ом!                                     
+                        <i>Нежные и воздушные пироженки макаруны необычайно популярны во всем мире. Счастливчики, попробовавшие этот десерт, могут с уверенностью сказать, что они отличаются легким, но необычным вкусом.  </i>
                     </div>
                 </div>
                 <div class="tabcontent">
-                    <img src="img/tabs/vegy.jpg" alt="vegy">
+                    <img src="img/tabs/trifles.jpg" alt="trifle">
                     <div class="tabcontent__descr">
-                        Меню "Сбалансированное" - это соответствие вашего рациона всем научным рекомендациям. Мы тщательно просчитываем вашу потребность в к/б/ж/у и создаем лучшие блюда для вас.
+                        <i>Десерт в стаканчике или трайфл представляет собой слоеное лакомство, в котором сочетаются бисквит, крем, ягоды, конфитюр, любые другие начинки и наполнители на ваш вкус.</i>
                     </div>
                 </div> 
                 <div class="tabheader">
-                    <h3>Выберите стиль питания</h3>
+                    <h3>Выберите десерт</h3>
                     <div class="tabheader__items">
-                        <div class="tabheader__item tabheader__item_active">Фитнес</div>
-                        <div class="tabheader__item">Премиум</div>
-                        <div class="tabheader__item">Постное</div>
-                        <div class="tabheader__item">Сбалансированное</div>
+                        <div class="tabheader__item tabheader__item_active">Капкейки</div>
+                        <div class="tabheader__item">Торты</div>
+                        <div class="tabheader__item">Макарон</div>
+                        <div class="tabheader__item">Трайфлы</div>
                     </div>
                 </div>
             </div>
-            <div class="preview__life">Живи полной жизнью!</div>
+            <div class="preview__life">Вкус и качество это наш аспект!</div>
         </div>
     </div>
 
@@ -82,7 +102,7 @@
             <div class="offer__text">
                 <h2 class="title">Что мы можем вам предложить?</h2>
                 <div class="offer__descr">
-                    Наша основная идея - это правильное питание. Оно может быть простым и вкусным. Мы не просто доставка, мы сервис! Мы взяли на себя все расчеты БЖУ, калорийности, объемов порций и прочие важные, но скучные аспекты. Вам остается только полезная, сытная и правильная еда, которую мы привозим прямо под дверь.
+                    Наша основная идея - это создать кондитерский шедевр. Он может быть простым и вкусным. Мы не просто кондитерская, мы команда! Мы взяли на себя все самое сложное. Вам остается только наслаждаться и радовать окружающих.
                 </div>
             </div>
             <div class="offer__action">
@@ -91,13 +111,13 @@
         </div>
         <div class="container">
             <div class="offer__advantages">
-                <h2>Быстро и полезно</h2>
+                <h2>Быстро и вкусно</h2>
                 <div class="offer__advantages-text">
-                    Готовка дома занимает много сил, времени и нервов. Мы привозим еду сразу на целый день, и ты можешь действовать так, как тебе удобно, не подстраиваясь ни под кого и будучи уверенным в качестве продукта!
+                    Готовка дома занимает много сил, времени и нервов. Заказывая у нас вы освобождаете себя от лишней работы, в то время как мы готовим для вас с душой и любовью.
                 </div>
-                <h2>Правильный рацион</h2>
+                <h2>Опыт и навыки</h2>
                 <div class="offer__advantages-text">
-                    Мы разработали специальное меню, где учтены все нюансы правильного питания, от баланса БЖУ до их приготовления и дробления рациона.
+                    Рецепты, по которым наши кондитеры готовят для вас десерты, разрабатывались нашей командой долгое время, за которое были учтены все ошибки и предпочтения клиентов.
                 </div>
             </div>
             <div class="offer__slider">
@@ -115,16 +135,16 @@
                 <div class="offer__slider-wrapper">
                     <div class="offer__slider-inner">
                         <div class="offer__slide">
-                            <img src="img/slider/pepper.jpg" alt="pepper">
+                            <img src="img/slider/decor.jpg" alt="cake_icon">
                         </div>
                         <div class="offer__slide">
-                            <img src="img/slider/food-12.jpg" alt="food">
+                            <img src="img/slider/decor2.jpg" alt="food">
                         </div>
                         <div class="offer__slide">
-                            <img src="img/slider/olive-oil.jpg" alt="oil">
+                            <img src="img/slider/decor3.jpg" alt="oil">
                         </div>
                         <div class="offer__slide">
-                            <img src="img/slider/paprika.jpg" alt="paprika">
+                            <img src="img/slider/decor4.jpg" alt="paprika">
                         </div>
                     </div>
                 </div>
@@ -136,44 +156,35 @@
 
     <div class="calculating">
         <div class="container">
-            <h2 class="title">Рассчитаем вашу потребность в калориях?
+            <a name="calc"></a>
+            <h2 class="title">Рассчитаем вес торта для праздника?
             </h2>
             <div class="calculating__field">
                 <div class="calculating__subtitle">
-                    Ваш пол
+                    Тип гостей
                 </div>
-                <div class="calculating__choose" id="gender">
-                    <div id="female" class="calculating__choose-item calculating__choose-item_active">Женщина</div>
-                    <div id="male" class="calculating__choose-item">Мужчина</div>
+                <div class="calculating__choose" id="type">
+                    <div id="children" class="calculating__choose-item calculating__choose-item_active">Дети</div>
+                    <div id="adults" class="calculating__choose-item">Взрослые</div>
                 </div>
 
                 <div class="calculating__subtitle">
-                    Ваша конституция
+                    Необходимые данные
                 </div>
                 <div class="calculating__choose calculating__choose_medium">
-                    <input type="text" id="height" placeholder="Введите рост" class="calculating__choose-item">
-                    <input type="text" id="weight" placeholder="Введите вес"  class="calculating__choose-item">
-                    <input type="text" id="age" placeholder="Введите возраст" class="calculating__choose-item">
-                </div>
-
-                <div class="calculating__subtitle">
-                    Выберите вашу физическая активность
-                </div>
-                <div class="calculating__choose calculating__choose_big">
-                    <div data-ratio="1.2" id="low" class="calculating__choose-item">Низкая активность </div>
-                    <div data-ratio="1.375" id="small"  class="calculating__choose-item calculating__choose-item_active">Невысокая активность</div>
-                    <div data-ratio="1.55" id="medium" class="calculating__choose-item">Умеренная активность</div>
-                    <div data-ratio="1.725" id="high" class="calculating__choose-item">Высокая активность</div>
+                    <input type="text" id="number" placeholder="Введите количество гостей" class="calculating__choose-item">
+                    <input type="text" id="weight" placeholder="Введите вес торта для одного человека"  class="calculating__choose-item">
+                    <input type="text" id="addWeight" placeholder="Введите дополнительный вес" class="calculating__choose-item">
                 </div>
 
                 <div class="calculating__divider"></div>
 
                 <div class="calculating__total">
                     <div class="calculating__subtitle">
-                        Ваша суточная норма калорий:
+                        Вам нужен торт весом :
                     </div>
                     <div class="calculating__result">
-                        <span>2700</span> ккал
+                        <span>2700</span> г
                     </div>
                 </div>
             </div>
@@ -183,18 +194,19 @@
     <div class="divider"></div>
 
     <div class="menu">
-        <h2 class="title">Наше меню на день</h2>
+        <a name="offers"></a>
+        <h2 class="title">Предложения недели</h2>
 
         <div class="menu__field">
             <div class="container">
-                
+
             </div>
         </div>
     </div>
 
     <div class="order">
         <div class="container">
-            <div class="title">Заказывай пробный день прямо сейчас!</div>
+            <div class="title">Заказывай наши предложения прямо сейчас!</div>
             <form action="#" class="order__form">
                 <input required placeholder="Ваше имя" name="name" type="text" class="order__input">
                 <input required placeholder="Ваш номер телефона" name="phone" type="phone" class="order__input">
@@ -213,9 +225,9 @@
                 <div class="title">Акция для новых клиентов!</div>
                 <div class="promotion__descr">
                     Мы ценим каждого клиента и предлагаем вам стать одним из них на очень выгодных условиях. 
-                    Каждому, кто закажет доставку питание на неделю, будет предоставлена скидка в размере <span>20%!</span>
+                    Каждому, кто закажет десерт первый раз предоставляется скидка в размере <span>15%!</span>
                     <br><br>
-                    Акция закончится 20 мая в 00:00
+                    Акция закончится 20 января в 00:00
                 </div>
             </div>
             <div class="promotion__timer">
@@ -246,19 +258,21 @@
         <div class="container">
             <div class="social">
                 <div class="subtitle">Мы в социальных сетях:</div>
-                <a href="#" class="link">instagram</a>
-                <a href="#" class="link">facebook</a>
+                <a href="https://instagram.com/desserts.koma?utm_medium=copy_link" class="link">instagram</a>
+                <a href="https://t.me/dessertscoma" class="link">telegram</a>
             </div>
-            <div class="pepper">
-                <img src="icons/veg.svg" alt="pepper">
+            <div class="cake_icon">
+                <a href="#" class="link"><img src="icons/cake.png" alt="cake_icon" id="cake_home"></a>
             </div>
             <div class="call">
                 <div class="subtitle">Или позвоните нам</div>
-                <a href="#" class="link">+380678341034</a>
-                <a href="#" class="link">+380500941356</a>
+                <a href="#" class="link">+375296505036</a>
+                <a href="#" class="link">+375296151036</a>
             </div>
         </div>
     </footer>
+
+    </div>
 
     <div class="modal">
         <div class="modal__dialog">

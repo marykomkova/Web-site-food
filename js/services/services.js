@@ -1,5 +1,6 @@
 /* jshint -W104 */
 /* jshint -W119 */
+//подклю
 export const postData = async (url, data) => {
     const res = await fetch(url, {
         method: 'POST',
